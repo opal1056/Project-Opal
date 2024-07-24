@@ -4,40 +4,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="index.css" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="shortcut icon" type="image/png" href="logo.png" />
     <title>NGINX Proxy</title>
+    <style>
+        body {
+            background-color: #1C1C1C;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        .title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            width: 10000px;
+            max-width: 600px; /* Increased max-width for a wider textbox */
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        
+        input[type="text"]::placeholder {
+            color: #ccc;
+            font-weight: 400;
+            text-align: center;
+        }
+        
+        button {
+            display: none; /* Hidden since not used */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": false,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "bottom",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": false,
+                            "mode": "repulse"
+                        },
+                        "onclick": {
+                            "enable": false,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+
+        function go() {
+            var input = document.getElementById('url-target').value.trim();
+            var urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/i;
+
+            if (urlRegex.test(input)) {
+                // Valid URL
+                if (!input.startsWith('http://') && !input.startsWith('https://')) {
+                    input = 'http://' + input; // Add http:// if missing
+                }
+                window.location.href = '/main/' + input;
+            } else if (input) {
+                // Invalid URL, perform a Google search and proxy the results
+                window.location.href = '/main/https://www.google.com/search?q=' + input;
+            } else {
+                alert('Please provide a link or search term.');
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                go();
+            }
+        });
+    </script>
 </head>
 
 <body>
+    <div id="particles-js"></div>
     <div class="container">
-        <img src="logo-full.png" width="250" height="250">
-        <div>
-            <script>
-                function go() {
-                    var input = document.getElementById('url-target');
-                    if (input.value) {
-                        window.location.href = '/main/' + input.value;
-                    } else {
-                        alert('Please provide a link. It does not require https://.');
-                    }
-                }
-            </script>
-            <span class="w3-xlarge">Input your URL here: </span>
-            <div>
-                <input class="w3-xlarge" type='text' placeholder='https://www.google.com' id='url-target'
-                    onkeydown='if(event.key==="Enter") go()' />
-                <button onclick='go()' class="w3-xlarge">Go!</button>
-            </div>
-            <br>
-            <br>
-            </p>
-            <p class="w3-medium">View GitHub source <a class="w3-medium" href="https://github.com/binary-person/womginx" target="_blank">here</a></p>
-        </div>
+        <div class="title">Project Opal</div>
+        <input type='text' placeholder='Dive into the unblocked web...' id='url-target' />
     </div>
 </body>
 
