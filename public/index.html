@@ -8,7 +8,7 @@
     <link href="index.css" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="shortcut icon" type="image/png" href="logo.png" />
-    <title>NGINX Proxy</title>
+    <title>Project Opal</title>
     <style>
         body {
             background-color: #1C1C1C;
@@ -24,7 +24,7 @@
             align-items: center;
             position: relative;
         }
-        
+
         #particles-js {
             position: absolute;
             top: 0;
@@ -33,16 +33,17 @@
             height: 100%;
             z-index: -1;
         }
-        
+
         .container {
             text-align: center;
+            z-index: 2; /* Ensure container is above particles.js */
         }
-        
+
         .title {
             font-size: 2rem;
             margin-bottom: 20px;
         }
-        
+
         input[type="text"] {
             background-color: black;
             color: white;
@@ -50,18 +51,18 @@
             border-radius: 8px;
             padding: 12px 16px;
             font-size: 1rem;
-            width: 10000px;
-            max-width: 600px; /* Increased max-width for a wider textbox */
+            width: 100%; /* Responsive width */
+            max-width: 600px; /* Maximum width */
             box-sizing: border-box;
             margin: 0 auto;
         }
-        
+
         input[type="text"]::placeholder {
             color: #ccc;
             font-weight: 400;
             text-align: center;
         }
-        
+
         button {
             display: none; /* Hidden since not used */
         }
